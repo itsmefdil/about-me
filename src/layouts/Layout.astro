@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article' | 'profile';
+  jsonLd?: object;
+}
+
+const {
+  title,
+  description,
+  image = '/posters/meetup-devops-jogja-6-2025.png',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = Astro.site?.href || 'https://fadilahriczky.web.id/';
+const canonicalURL = new URL(Astro.url.pathname, siteUrl).href;
+const imageUrl = image.startsWith('http') ? image : new URL(image, siteUrl).href;
+
+// Default Person Schema.org JSON-LD for Portfolio / Profile
+const defaultPersonSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Fadilah Riczky",
+  "jobTitle": "DevOps Engineer",
+  "url": siteUrl,
+  "sameAs": [
+    "https://github.com/itsmefdil",
+    "https://linkedin.com/in/itsmefdil"
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "PT Atmatech Global Informatika"
+  },
+  "knowsAbout": [
+    "DevOps",
+    "Kubernetes",
+    "Docker",
+    "Terraform",
+    "CI/CD",
+    "Prometheus",
+    "Linux"
+  ]
+};
+
+const activeJsonLd = jsonLd || defaultPersonSchema;
+---
+
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <script is:inline>
+      (function () {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Core SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Fadilah Riczky" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- OpenGraph (Facebook / WhatsApp / LinkedIn) -->
+    <meta property="og:site_name" content="Fadilah Riczky - DevOps Portfolio" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content={type} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:locale" content="id_ID" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <!-- JSON-LD Structured Data Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(activeJsonLd)} />
+  </head>
+  <body>
+    <div class="top-nav-wrapper">
+      <slot name="top-nav" />
+    </div>
+    <main class="main-container">
+      <slot />
+    </main>
+  </body>
+</html>

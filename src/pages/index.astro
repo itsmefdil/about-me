@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import NavBoxes from '../components/NavBoxes.astro';
+import Summary from '../components/Summary.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Education from '../components/Education.astro';
+import Community from '../components/Community.astro';
+import Toolbar from '../components/Toolbar.astro';
+import { getCvData } from '../utils/cvLoader';
+
+const cvData = getCvData();
+const pageTitle = `${cvData.personal.name} - ${cvData.personal.title} | ATS Portfolio`;
+const pageDescription = cvData.summary.slice(0, 160) + '...';
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+  <Header personal={cvData.personal} />
+  <Summary summary={cvData.summary} />
+  <Experience experience={cvData.experience} />
+  <Skills skills={cvData.skills} />
+  <Education education={cvData.education} />
+  <Community community={cvData.community} />
+
+  <footer class="footer no-print">
+    <p>© {new Date().getFullYear()} {cvData.personal.name}. Built with Astro & deployed on GitHub Pages.</p>
+  </footer>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+</style>

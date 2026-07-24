@@ -1,0 +1,91 @@
+---
+import type { EducationItem } from '../utils/cvLoader';
+
+interface Props {
+  education: EducationItem[];
+}
+
+const { education } = Astro.props;
+---
+
+<section id="education" class="section">
+  <h2 class="section-title">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+    Education & Academic Background
+  </h2>
+
+  <div class="education-list">
+    {education.map((edu) => (
+      <div class="education-card">
+        <div class="edu-header">
+          <div>
+            <h3 class="degree-title">{edu.degree}</h3>
+            <p class="institution-name">{edu.institution} — {edu.location}</p>
+          </div>
+          <div class="edu-meta">
+            <span class="period">{edu.period}</span>
+            <span class="gpa-badge">GPA: {edu.gpa}</span>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .education-card {
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+  .edu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .degree-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .institution-name {
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+  }
+  .edu-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+  .period {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+  }
+  .gpa-badge {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+
+  @media (max-width: 640px) {
+    .edu-meta {
+      align-items: flex-start;
+    }
+  }
+</style>

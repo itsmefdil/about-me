@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fadilahriczky.web.id/sitemap.xml

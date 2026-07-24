@@ -1,0 +1,33 @@
+languages:
+  - "English (Intermediate)"
+  - "Indonesian (Native)"
+cloud:
+  - "AWS"
+  - "Google Cloud Platform (GCP)"
+  - "DigitalOcean"
+  - "Contabo"
+containerization:
+  - "Kubernetes"
+  - "Docker"
+  - "Podman"
+  - "Portainer"
+  - "Rancher"
+  - "k3s"
+programming:
+  - "Python"
+  - "Bash / Shell Script"
+infrastructure_as_code:
+  - "Terraform"
+  - "Helm"
+  - "Ansible"
+ci_cd:
+  - "Jenkins"
+  - "GitLab CI/CD"
+  - "GitHub Actions"
+  - "ArgoCD"
+observability:
+  - "Prometheus"
+  - "Grafana"
+  - "Dozzle"
+security:
+  - "SonarQube"

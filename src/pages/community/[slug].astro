@@ -1,0 +1,179 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavBoxes from '../../components/NavBoxes.astro';
+import Toolbar from '../../components/Toolbar.astro';
+import { getAllCommunityPosts, getCommunityPostBySlug } from '../../utils/communityLoader';
+
+export function getStaticPaths() {
+  const posts = getAllCommunityPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const item = getCommunityPostBySlug(slug!);
+
+if (!item) {
+  throw new Error(`Community profile not found for slug: ${slug}`);
+}
+
+const pageTitle = `${item.community} (${item.role}) | Community - Fadilah Riczky`;
+const pageDescription = `${item.role} at ${item.community}.`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+
+  <article class="community-detail-article">
+    <header class="detail-header">
+      <div class="meta-row">
+        {item.period && <span class="meta-badge">{item.period}</span>}
+        {item.location && <span class="meta-badge">{item.location}</span>}
+      </div>
+
+      <h1 class="community-title">{item.community}</h1>
+      <h2 class="role-subtitle">{item.role}</h2>
+
+      {item.website && (
+        <div class="website-row">
+          <strong class="label">Website:</strong>
+          <a href={item.website} target="_blank" rel="noopener noreferrer" class="web-link">
+            {item.website} ↗
+          </a>
+        </div>
+      )}
+    </header>
+
+    {item.responsibilities && item.responsibilities.length > 0 && (
+      <section class="responsibilities-section">
+        <h3 class="section-subhead">Responsibilities & Contributions</h3>
+        <ul class="resp-list">
+          {item.responsibilities.map((r) => (
+            <li>{r}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {item.contentHtml && (
+      <div class="detail-body" set:html={item.contentHtml} />
+    )}
+
+    <footer class="detail-footer no-print">
+      <a href="/community" class="back-link">← Back to All Communities</a>
+    </footer>
+  </article>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .community-detail-article {
+    max-width: 100%;
+  }
+  .detail-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .meta-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .meta-badge {
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    padding: 0.15rem 0.5rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  .community-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+  .role-subtitle {
+    font-size: 1.15rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+  }
+  .website-row {
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .label {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .web-link {
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    text-decoration: underline;
+  }
+  .responsibilities-section {
+    margin-bottom: 2rem;
+  }
+  .section-subhead {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .resp-list {
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .resp-list li {
+    font-size: 0.98rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .detail-body {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-top: 1.5rem;
+  }
+  .detail-body :global(h1),
+  .detail-body :global(h2),
+  .detail-body :global(h3) {
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .detail-body :global(p) {
+    margin-bottom: 1.25rem;
+  }
+  .detail-body :global(ul),
+  .detail-body :global(ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .detail-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

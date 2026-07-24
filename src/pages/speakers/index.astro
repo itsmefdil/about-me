@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavBoxes from '../../components/NavBoxes.astro';
+import Toolbar from '../../components/Toolbar.astro';
+import { getAllTalks } from '../../utils/speakersLoader';
+
+const talks = getAllTalks();
+const pageTitle = "Speaking & Workshops | Fadilah Riczky";
+const pageDescription = "Speaking sessions, conference talks, tech workshops, and slide presentations by Fadilah Riczky.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+
+  <header class="speakers-header">
+    <h1 class="speakers-main-title">As Speaker & Workshops</h1>
+    <p class="speakers-subtitle">Conference talks, technical workshops, posters, and presentation slides.</p>
+  </header>
+
+  <div class="talks-list">
+    {talks.length > 0 ? (
+      talks.map((talk) => (
+        <article class="talk-card">
+          {talk.poster && (
+            <div class="poster-wrapper">
+              <img src={talk.poster} alt={talk.title} class="talk-poster" />
+            </div>
+          )}
+          <div class="talk-info">
+            <div class="talk-meta">
+              <span class="talk-event">{talk.event}</span>
+              <span class="dot">•</span>
+              <time class="talk-date">{talk.date}</time>
+              {talk.location && <span class="talk-location">({talk.location})</span>}
+            </div>
+            <h2 class="talk-title">
+              <a href={`/speakers/${talk.slug}`}>{talk.title}</a>
+            </h2>
+            <p class="talk-desc">{talk.description}</p>
+
+            <div class="talk-actions">
+              {talk.slidesUrl && (
+                <a href={talk.slidesUrl} target="_blank" rel="noopener noreferrer" class="action-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                  View Slides / Presentation
+                </a>
+              )}
+              {talk.videoUrl && (
+                <a href={talk.videoUrl} target="_blank" rel="noopener noreferrer" class="action-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  Watch Recording
+                </a>
+              )}
+              <a href={`/speakers/${talk.slug}`} class="action-btn action-outline">
+                Details →
+              </a>
+            </div>
+          </div>
+        </article>
+      ))
+    ) : (
+      <p class="empty-talks">No speaker talks found in the speakers/ directory.</p>
+    )}
+  </div>
+
+  <div class="back-home no-print">
+    <a href="/" class="back-link">← Back to CV / Portfolio</a>
+  </div>
+
+  <footer class="footer no-print">
+    <p>© {new Date().getFullYear()} Fadilah Riczky. Built with Astro.</p>
+  </footer>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .speakers-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .speakers-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .speakers-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 0.35rem;
+  }
+  .talks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .talk-card {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .talk-card:last-child {
+    border-bottom: none;
+  }
+  .poster-wrapper {
+    width: 220px;
+    flex-shrink: 0;
+  }
+  .talk-poster {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+  }
+  .talk-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .talk-meta {
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .talk-event {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .dot {
+    color: var(--text-muted);
+  }
+  .talk-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+  }
+  .talk-title a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .talk-title a:hover {
+    opacity: 0.75;
+  }
+  .talk-desc {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .talk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: auto;
+  }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .action-btn:hover {
+    border-color: var(--text-primary);
+    opacity: 0.85;
+  }
+  .back-home {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+  }
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .talk-card {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .poster-wrapper {
+      width: 100%;
+    }
+  }
+</style>

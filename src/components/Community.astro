@@ -1,0 +1,135 @@
+---
+import type { CommunityItem } from '../utils/cvLoader';
+
+interface Props {
+  community: CommunityItem[];
+}
+
+const { community } = Astro.props;
+---
+
+{community && community.length > 0 && (
+  <section id="community" class="section">
+    <h2 class="section-title">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Community Involvement
+    </h2>
+
+    <div class="community-list">
+      {community.map((item) => (
+        <article class="community-card">
+          <div class="card-header">
+            <div class="role-community">
+              <h3 class="community-name">
+                {item.community}
+                {item.website && (
+                  <a href={item.website} target="_blank" rel="noopener noreferrer" class="community-link" title="Visit Website">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    <span>{item.website.replace(/^https?:\/\//, '')}</span>
+                  </a>
+                )}
+              </h3>
+              <div class="role-title">
+                <strong>{item.role}</strong>
+                {item.location && (
+                  <>
+                    <span class="dot">•</span>
+                    <span class="location">{item.location}</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div class="period-badge-wrap">
+              <span class="period">{item.period}</span>
+            </div>
+          </div>
+
+          {item.responsibilities && item.responsibilities.length > 0 && (
+            <ul class="resp-list">
+              {item.responsibilities.map((resp) => (
+                <li>{resp}</li>
+              ))}
+            </ul>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+)}
+
+<style>
+  .community-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .community-card {
+    position: relative;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .community-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .community-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.82rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--text-primary);
+    text-decoration: none;
+    border: 1px solid var(--border-color);
+    padding: 0.1rem 0.4rem;
+  }
+  .community-link:hover {
+    opacity: 0.8;
+  }
+  .role-title {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-top: 0.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .dot {
+    color: var(--text-muted);
+  }
+  .period-badge-wrap {
+    display: flex;
+    align-items: center;
+  }
+  .period {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .resp-list {
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.35rem;
+  }
+  .resp-list li {
+    font-size: 0.93rem;
+    color: var(--text-primary);
+    line-height: 1.55;
+  }
+</style>

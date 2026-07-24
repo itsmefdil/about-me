@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavBoxes from '../../components/NavBoxes.astro';
+import Toolbar from '../../components/Toolbar.astro';
+import { getAllCommunityPosts } from '../../utils/communityLoader';
+
+const communities = getAllCommunityPosts();
+const pageTitle = "Community Involvement | Fadilah Riczky";
+const pageDescription = "Community leadership, open-source initiatives, tech meetups, and developer community activities by Fadilah Riczky.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+
+  <header class="community-header">
+    <h1 class="community-main-title">Community Involvement</h1>
+    <p class="community-subtitle">Select a community below to view complete details, responsibilities, and website information.</p>
+  </header>
+
+  <div class="community-list">
+    {communities.length > 0 ? (
+      communities.map((item) => (
+        <article class="community-simple-card">
+          <a href={`/community/${item.slug}`} class="community-card-link">
+            <div class="card-content">
+              <h2 class="community-name">{item.community}</h2>
+              <span class="community-role">{item.role}</span>
+            </div>
+            <span class="arrow">Details →</span>
+          </a>
+        </article>
+      ))
+    ) : (
+      <p class="empty-msg">No community profiles found in content/community/.</p>
+    )}
+  </div>
+
+  <div class="back-home no-print">
+    <a href="/" class="back-link">← Back to CV / Portfolio</a>
+  </div>
+
+  <footer class="footer no-print">
+    <p>© {new Date().getFullYear()} Fadilah Riczky. Built with Astro.</p>
+  </footer>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .community-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .community-main-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .community-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 0.35rem;
+  }
+  .community-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .community-simple-card {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+  }
+  .community-simple-card:hover {
+    border-color: var(--text-primary);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+  .community-card-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .community-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .community-role {
+    font-size: 0.92rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+  }
+  .arrow {
+    font-size: 0.88rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+  }
+  .back-home {
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+  }
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+  .footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+</style>

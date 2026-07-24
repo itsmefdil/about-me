@@ -1,0 +1,190 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavBoxes from '../../components/NavBoxes.astro';
+import Toolbar from '../../components/Toolbar.astro';
+import { getAllTalks, getTalkBySlug } from '../../utils/speakersLoader';
+
+export function getStaticPaths() {
+  const talks = getAllTalks();
+  return talks.map((talk) => ({
+    params: { slug: talk.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const talk = getTalkBySlug(slug!);
+
+if (!talk) {
+  throw new Error(`Talk not found for slug: ${slug}`);
+}
+
+const pageTitle = `${talk.title} | Speaker Session - Fadilah Riczky`;
+const pageDescription = talk.description;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+
+  <article class="talk-detail-article">
+    <header class="talk-header">
+      <div class="talk-meta">
+        <span class="talk-event">{talk.event}</span>
+        <span class="dot">•</span>
+        <time class="talk-date">{talk.date}</time>
+        {talk.location && <span class="talk-location">({talk.location})</span>}
+      </div>
+      <h1 class="talk-title">{talk.title}</h1>
+      <p class="talk-desc-lead">{talk.description}</p>
+
+      <div class="talk-actions">
+        {talk.slidesUrl && (
+          <a href={talk.slidesUrl} target="_blank" rel="noopener noreferrer" class="action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            Download / View Slides
+          </a>
+        )}
+        {talk.videoUrl && (
+          <a href={talk.videoUrl} target="_blank" rel="noopener noreferrer" class="action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Watch Video Recording
+          </a>
+        )}
+      </div>
+    </header>
+
+    {talk.poster && (
+      <div class="poster-container">
+        <img src={talk.poster} alt={talk.title} class="talk-poster-large" />
+      </div>
+    )}
+
+    <div class="talk-content" set:html={talk.contentHtml} />
+
+    <footer class="talk-footer no-print">
+      <a href="/speakers" class="back-link">← Back to All Speaking Sessions</a>
+    </footer>
+  </article>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .talk-detail-article {
+    max-width: 100%;
+  }
+  .talk-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .talk-meta {
+    font-size: 0.88rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .talk-event {
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .dot {
+    color: var(--text-muted);
+  }
+  .talk-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+  .talk-desc-lead {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .talk-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.88rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .action-btn:hover {
+    border-color: var(--text-primary);
+    opacity: 0.85;
+  }
+  .poster-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+  }
+  .talk-poster-large {
+    max-width: 100%;
+    height: auto;
+    max-height: 750px;
+    object-fit: contain;
+  }
+  .talk-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+  .talk-content :global(h1),
+  .talk-content :global(h2),
+  .talk-content :global(h3) {
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .talk-content :global(h1) { font-size: 1.6rem; }
+  .talk-content :global(h2) { font-size: 1.35rem; }
+  .talk-content :global(h3) { font-size: 1.15rem; }
+  .talk-content :global(p) {
+    margin-bottom: 1.25rem;
+  }
+  .talk-content :global(ul),
+  .talk-content :global(ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .talk-content :global(li) {
+    margin-bottom: 0.4rem;
+  }
+  .talk-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import NavBoxes from '../../components/NavBoxes.astro';
+import Toolbar from '../../components/Toolbar.astro';
+import { getAllPosts, getPostBySlug } from '../../utils/blogLoader';
+
+export function getStaticPaths() {
+  const posts = getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = getPostBySlug(slug!);
+
+if (!post) {
+  throw new Error(`Post not found for slug: ${slug}`);
+}
+
+const pageTitle = `${post.title} | Blog - Fadilah Riczky`;
+const pageDescription = post.description;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <NavBoxes slot="top-nav" />
+
+  <article class="blog-post-article">
+    <header class="post-header">
+      <div class="post-meta">
+        <time>{post.date}</time>
+        <span>• {post.author}</span>
+      </div>
+      <h1 class="post-title">{post.title}</h1>
+      <div class="post-tags">
+        {post.tags.map((tag) => (
+          <span class="post-tag">{tag}</span>
+        ))}
+      </div>
+    </header>
+
+    <div class="post-content" set:html={post.contentHtml} />
+
+    <footer class="post-footer no-print">
+      <a href="/blog" class="back-link">← Back to All Articles</a>
+    </footer>
+  </article>
+
+  <Toolbar />
+</Layout>
+
+<style>
+  .blog-post-article {
+    max-width: 100%;
+  }
+  .post-header {
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .post-meta {
+    font-size: 0.88rem;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .post-title {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .post-tag {
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0.15rem 0.5rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+  .post-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+  .post-content :global(h1),
+  .post-content :global(h2),
+  .post-content :global(h3) {
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .post-content :global(h1) { font-size: 1.6rem; }
+  .post-content :global(h2) { font-size: 1.35rem; }
+  .post-content :global(h3) { font-size: 1.15rem; }
+  .post-content :global(p) {
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+  }
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .post-content :global(li) {
+    margin-bottom: 0.4rem;
+  }
+  .post-content :global(code) {
+    font-family: var(--font-mono);
+    background: var(--bg-tertiary);
+    padding: 0.15rem 0.4rem;
+    font-size: 0.88rem;
+    border: 1px solid var(--border-color);
+  }
+  .post-content :global(pre) {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+  }
+  .post-content :global(pre code) {
+    background: transparent;
+    padding: 0;
+    border: none;
+  }
+  .post-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+  }
+  .back-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-family: var(--font-mono);
+  }
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>

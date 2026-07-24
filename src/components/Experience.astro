@@ -1,0 +1,119 @@
+---
+import type { ExperienceItem } from '../utils/cvLoader';
+
+interface Props {
+  experience: ExperienceItem[];
+}
+
+const { experience } = Astro.props;
+---
+
+<section id="experience" class="section">
+  <h2 class="section-title">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+    Professional Experience
+  </h2>
+
+  <div class="experience-list">
+    {experience.map((item) => (
+      <article class="experience-card">
+        <div class="card-header">
+          <div class="role-company">
+            <h3 class="role-title">{item.role}</h3>
+            <div class="company-name">
+              <strong>{item.company}</strong>
+              <span class="dot">•</span>
+              <span class="location">{item.location}</span>
+            </div>
+          </div>
+          <div class="period-badge-wrap">
+            <span class="period">{item.period}</span>
+            <span class="badge type-badge">{item.type}</span>
+          </div>
+        </div>
+
+        {item.description && (
+          <p class="company-desc">{item.description}</p>
+        )}
+
+        <ul class="resp-list">
+          {item.responsibilities.map((resp) => (
+            <li>{resp}</li>
+          ))}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .experience-card {
+    position: relative;
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .role-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .company-name {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-top: 0.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .dot {
+    color: var(--text-muted);
+  }
+  .period-badge-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .period {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-blue);
+    font-weight: 500;
+  }
+  .type-badge {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+  .company-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+  .resp-list {
+    padding-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .resp-list li {
+    font-size: 0.93rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .resp-list li::marker {
+    color: var(--accent-cyan);
+  }
+</style>
