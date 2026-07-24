@@ -8,6 +8,16 @@
     - "Organizing regular meetups, technical sharing sessions, and hands-on workshops with industry sponsors."
     - "Directing open-source community platform development (devopsjogja.com & NgEvent platform)."
 
+- community: "OpenInfra Indonesia"
+  role: "Volunteer Organizer"
+  website: "https://www.openinfra.id/volunteers/"
+  period: "2024 – Present"
+  location: "Indonesia"
+  responsibilities:
+    - "Co-organizing national OpenInfra Indonesia meetups, OpenStack workshops, and open cloud infrastructure events."
+    - "Coordinating event logistics, speaker schedules, and volunteer operations across community chapters."
+    - "Promoting open infrastructure technologies including OpenStack, Kata Containers, and StarlingX."
+
 - community: "Cloud Native Indonesia"
   role: "Co-Organizer & DevOps Contributor"
   website: "https://cloudnative.id"
