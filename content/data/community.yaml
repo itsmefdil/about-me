@@ -1,3 +1,13 @@
+- community: "DevOps Jogja"
+  role: "Founder & Community Lead"
+  website: "https://devopsjogja.com"
+  period: "2023 – Present"
+  location: "Yogyakarta, Indonesia"
+  responsibilities:
+    - "Founder of DevOps Jogja, building infrastructure and community for 500+ DevOps, SRE, and Infrastructure Engineers in Yogyakarta."
+    - "Organizing regular meetups, technical sharing sessions, and hands-on workshops with industry sponsors."
+    - "Directing open-source community platform development (devopsjogja.com & NgEvent platform)."
+
 - community: "Cloud Native Indonesia"
   role: "Co-Organizer & DevOps Contributor"
   website: "https://cloudnative.id"
@@ -7,13 +17,3 @@
     - "Organizing technical meetups and hands-on DevOps/Kubernetes workshops for 5,000+ community members across Indonesia."
     - "Curating speaker line-ups and facilitating technical Q&A sessions on cloud-native tools."
     - "Managing open-source community infrastructure and automation scripts."
-
-- community: "DevOps Yogyakarta"
-  role: "Community Lead & Speaker Coordinator"
-  website: "https://devops-jogja.org"
-  period: "2022 – Present"
-  location: "Yogyakarta, Indonesia"
-  responsibilities:
-    - "Leading monthly tech sharing sessions focused on CI/CD automation, Terraform, Linux security, and Docker."
-    - "Mentoring junior engineers and students transitioning into DevOps roles."
-    - "Collaborating with local tech hubs and universities for developer workshops."
