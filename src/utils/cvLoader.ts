@@ -7,7 +7,7 @@ export interface Personal {
   title: string;
   location: string;
   email: string;
-  phone: string;
+  phone?: string;
   socials: {
     github: string;
     linkedin: string;
