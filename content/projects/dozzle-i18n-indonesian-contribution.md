@@ -1,6 +1,6 @@
 ---
 title: "Dozzle - Real-time Docker Log Viewer (Open Source Contribution)"
-description: "Contributed Indonesian language (Bahasa Indonesia) internationalization (i18n) support to Dozzle, a lightweight, real-time log monitoring application for Docker containers."
+description: "Contributed Indonesian language (Bahasa Indonesia) i18n support to Dozzle, a lightweight real-time Docker log monitoring application."
 period: "2025"
 tech: ["Go", "Vue.js", "i18n", "Docker", "Open Source"]
 githubUrl: "https://github.com/amir20/dozzle/pull/3884"

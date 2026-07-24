@@ -1,6 +1,6 @@
 ---
 title: "DevOps Jogja Official Website"
-description: "Official community website for DevOps Jogja (Building Infrastructure, Building Community), featuring event schedules, tech blog posts, speaker archives, and member registration."
+description: "Official community website for DevOps Jogja (Building Infrastructure, Building Community), featuring event schedules, tech blog posts, and speaker archives."
 period: "2024 – Present"
 tech: ["Python", "Django", "Tailwind CSS", "Docker", "HTML5"]
 githubUrl: "https://github.com/DevOps-Jogja/website"

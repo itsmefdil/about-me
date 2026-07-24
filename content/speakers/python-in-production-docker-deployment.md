@@ -5,7 +5,7 @@ date: "2024-09-21"
 location: "Berijalan Techno Center, Depok, Sleman, Yogyakarta"
 poster: "/posters/pyjogja-regular-talk-2024.png"
 slidesUrl: "https://linktr.ee/pyjogja"
-description: "A technical talk on containerizing Python applications with Docker, optimizing multi-stage builds, managing virtual environments in containers, and production deployment best practices."
+description: "A technical talk on containerizing Python apps with Docker, optimizing multi-stage builds, and production deployment best practices."
 ---
 
 # Python in Production: Harnessing Docker for Seamless Deployment

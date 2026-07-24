@@ -4,7 +4,7 @@ event: "Lightning Talk Syawalan 2026"
 date: "2026-04-18"
 location: "Ruang Literasi Kaliurang, Sleman, Yogyakarta"
 poster: "/posters/lightning-talk-syawalan-2026.png"
-description: "A lightning talk exploring the transition from traditional Shell/Bash scripting to Python for robust infrastructure automation, CLI tools, and maintainable DevOps workflows."
+description: "A lightning talk exploring the transition from Shell/Bash scripting to Python for robust infrastructure automation and maintainable DevOps workflows."
 ---
 
 # Bash to Python: The Shift

@@ -1,6 +1,6 @@
 ---
 title: "Mankeu - Personal Finance Management Application"
-description: "A modern, feature-rich personal finance management web application built with React, Bun, Express, and Drizzle ORM to track income, expenses, budgets, savings, and debts with ease."
+description: "A modern, feature-rich personal finance management web app built with React, Bun, Express, and Drizzle ORM to track income, expenses, and budgets."
 period: "2024"
 tech: ["React", "TypeScript", "Bun", "Express", "Drizzle ORM", "MySQL", "Tailwind CSS"]
 githubUrl: "https://github.com/itsmefdil/mankeu"
