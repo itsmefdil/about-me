@@ -89,12 +89,5 @@ export function getCvData(): CvData {
     };
   }
 
-  // Fallback to single cv.yaml if data directory doesn't exist
-  const yamlPath = path.resolve(process.cwd(), 'cv.yaml');
-  const fileContents = fs.readFileSync(yamlPath, 'utf8');
-  const loaded = yaml.load(fileContents) as any;
-  return {
-    ...loaded,
-    community: loaded.community || [],
-  };
+  throw new Error(`Data directory not found at ${dataDir}`);
 }
