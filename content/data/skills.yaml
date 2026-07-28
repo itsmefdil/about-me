@@ -13,6 +13,8 @@ containerization:
   - "Portainer"
   - "Rancher"
   - "k3s"
+  - "Longhorn"
+  - "Traefik"
 programming:
   - "Python"
   - "Bash / Shell Script"

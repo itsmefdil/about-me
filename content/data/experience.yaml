@@ -5,6 +5,8 @@
   type: "Full-time"
   description: "Atmatech is a software development company specializing in technology research and advanced software solutions, with a focus on Artificial Intelligence (AI) and big data analytics."
   responsibilities:
+    - "Managed and maintained bare-metal server infrastructure across Development, Staging, and Production environments, ensuring high availability, environment parity, and operational stability."
+    - "Deployed and administered K3s Kubernetes clusters on bare-metal staging environments, implementing Longhorn for distributed persistent storage and Traefik as the ingress controller."
     - "Designed and automated CI/CD pipelines using Jenkins and GitLab CI/CD, streamlining build, testing, and deployment workflows for multi-service applications."
     - "Orchestrated Kubernetes clusters and Docker-based workloads across staging and production environments, managing microservices and background worker services supporting Golang, Python, Node.js, and PHP applications."
     - "Executed a full cloud infrastructure migration from DigitalOcean to Contabo, transferring Kubernetes clusters, databases, background workers, and container workloads with minimal downtime and cost optimization."
